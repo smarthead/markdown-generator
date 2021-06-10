@@ -1,5 +1,9 @@
 namespace Markdown.Generator.Core.Elements
 {
+    /// <summary>
+    /// Represents markdown code-block
+    /// e.g ```csharp\nRandom string\n```\n 
+    /// </summary>
     public class Code: ElementBase
     {
         private readonly string _language;

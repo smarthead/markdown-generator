@@ -1,5 +1,9 @@
 namespace Markdown.Generator.Core.Elements
 {
+    /// <summary>
+    /// Represents markdown single-line code-block
+    /// e.g `code` 
+    /// </summary>
     public class CodeQuote : ElementBase
     {
         private readonly string _code;

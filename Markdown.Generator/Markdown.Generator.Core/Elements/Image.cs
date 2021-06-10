@@ -1,5 +1,9 @@
 namespace Markdown.Generator.Core.Elements
 {
+    /// <summary>
+    /// Represents markdown image
+    /// e.g ![title](url)
+    /// </summary>
     public class Image: ElementBase
     {
         private readonly string _altText;

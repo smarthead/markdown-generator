@@ -22,9 +22,9 @@ namespace Markdown.Generator.Core
 
         public void Header(int level, string text) => _elements.Add(new Header(level, text));
 
-        public void HeaderWithCode(int level, string code) => _elements.Add(new Header<CodeQuote>(level, new CodeQuote(code)));
+        public void HeaderWithCode(int level, string code) => _elements.Add(new Header(level, new CodeQuote(code)));
 
-        public void HeaderWithLink(int level, string text, string url) => _elements.Add(new Header<Link>(level, new Link(text, url)));
+        public void HeaderWithLink(int level, string text, string url) => _elements.Add(new Header(level, new Link(text, url)));
 
         public void Link(string text, string url) => _elements.Add(new Link(text, url));
 
@@ -40,7 +40,7 @@ namespace Markdown.Generator.Core
             => _elements.Add(new List(text));
 
         public void ListLink(string text, string url) // nest zero
-            => _elements.Add(new LinkList(new Link(text, url)));
+            => _elements.Add(new List(new Link(text, url)));
 
         public override string ToString()
         {

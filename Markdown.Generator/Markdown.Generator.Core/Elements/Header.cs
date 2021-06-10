@@ -1,5 +1,9 @@
 namespace Markdown.Generator.Core.Elements
 {
+    /// <summary>
+    /// Represents markdown header
+    /// e.g ## header\n
+    /// </summary>
     public class Header : ElementBase
     {
         private readonly int _level;
@@ -9,6 +13,14 @@ namespace Markdown.Generator.Core.Elements
         {
             _level = level;
             _text = text;
+        }
+        
+        public Header(int level, Link link) : this(level, link.Create())
+        {
+        }
+        
+        public Header(int level, CodeQuote codeQuote): this(level, codeQuote.Create())
+        {
         }
 
         public override string Create()
@@ -21,14 +33,6 @@ namespace Markdown.Generator.Core.Elements
             Builder.AppendLine(_text);
 
             return Builder.ToString();
-        }
-    }
-    
-    public class Header<T> : Header
-        where T: ElementBase 
-    {
-        public Header(int level, T element) : base(level, element.Create())
-        {
         }
     }
 }

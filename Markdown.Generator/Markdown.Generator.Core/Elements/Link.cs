@@ -1,5 +1,9 @@
 namespace Markdown.Generator.Core.Elements
 {
+    /// <summary>
+    /// Represents markdown link
+    /// e.g [title](url)
+    /// </summary>
     public class Link : ElementBase
     {
         private readonly string _text;
