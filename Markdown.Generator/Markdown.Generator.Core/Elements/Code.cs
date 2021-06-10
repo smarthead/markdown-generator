@@ -15,7 +15,7 @@ namespace Markdown.Generator.Core.Elements
         {
             Builder.Append("```");
             Builder.AppendLine(_language);
-            Builder.AppendLine(_language);
+            Builder.AppendLine(_code);
             Builder.AppendLine("```");
 
             return Builder.ToString();
