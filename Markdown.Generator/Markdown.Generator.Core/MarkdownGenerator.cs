@@ -19,10 +19,24 @@ namespace Markdown.Generator.Core
             
             var commentsLookup = comments.ToLookup(x => x.ClassName);
 
-            var namespaceRegex = 
+            return GetMarkdownableTypes(new []{Assembly.LoadFrom(dllPath)}, namespaceMatch, commentsLookup);
+        }
+        
+        public static MarkdownableType[] Load(Assembly[] assemblies, string namespaceMatch)
+        {
+            var comments = Array.Empty<XmlDocumentComment>();
+            var commentsLookup = comments.ToLookup(x => x.ClassName);
+
+            return GetMarkdownableTypes(assemblies, namespaceMatch, commentsLookup);
+        }
+
+        private static MarkdownableType[] GetMarkdownableTypes(Assembly[] assemblies, string namespaceMatch,
+            ILookup<string, XmlDocumentComment> commentsLookup)
+        {
+            var namespaceRegex =
                 !string.IsNullOrEmpty(namespaceMatch) ? new Regex(namespaceMatch) : null;
 
-            var markdownableTypes = new[] { Assembly.LoadFrom(dllPath) }
+            var markdownableTypes = assemblies
                 .SelectMany(x =>
                 {
                     try
@@ -39,11 +53,11 @@ namespace Markdown.Generator.Core
                     }
                 })
                 .Where(x => x != null)
-                .Where(x => x.IsPublic && !typeof(Delegate).IsAssignableFrom(x) && !x.GetCustomAttributes<ObsoleteAttribute>().Any())
+                .Where(x => x.IsPublic && !typeof(Delegate).IsAssignableFrom(x) &&
+                            !x.GetCustomAttributes<ObsoleteAttribute>().Any())
                 .Where(x => IsRequiredNamespace(x, namespaceRegex))
                 .Select(x => new MarkdownableType(x, commentsLookup))
                 .ToArray();
-
 
             return markdownableTypes;
         }

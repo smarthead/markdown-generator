@@ -11,7 +11,7 @@ namespace Markdown.Generator.Core
         
         public static string MarkdownCodeQuote(string code)
         {
-            return "`" + code + "`";
+            return new CodeQuote(code).Create();
         }
 
         public void Append(string text) 
