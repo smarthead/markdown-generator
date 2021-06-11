@@ -29,6 +29,14 @@ namespace Markdown.Generator.Core
 
             return GetMarkdownableTypes(assemblies, namespaceMatch, commentsLookup);
         }
+        
+        public static MarkdownableType[] Load(Type[] types)
+        {
+            var comments = Array.Empty<XmlDocumentComment>();
+            var commentsLookup = comments.ToLookup(x => x.ClassName);
+
+            return GetMarkdownableTypes(types, commentsLookup);
+        }
 
         private static MarkdownableType[] GetMarkdownableTypes(Assembly[] assemblies, string namespaceMatch,
             ILookup<string, XmlDocumentComment> commentsLookup)
@@ -36,7 +44,7 @@ namespace Markdown.Generator.Core
             var namespaceRegex =
                 !string.IsNullOrEmpty(namespaceMatch) ? new Regex(namespaceMatch) : null;
 
-            var markdownableTypes = assemblies
+            var types =  assemblies
                 .SelectMany(x =>
                 {
                     try
@@ -53,14 +61,19 @@ namespace Markdown.Generator.Core
                     }
                 })
                 .Where(x => x != null)
-                .Where(x => x.IsPublic && !typeof(Delegate).IsAssignableFrom(x) &&
-                            !x.GetCustomAttributes<ObsoleteAttribute>().Any())
                 .Where(x => IsRequiredNamespace(x, namespaceRegex))
-                .Select(x => new MarkdownableType(x, commentsLookup))
                 .ToArray();
 
-            return markdownableTypes;
+            return GetMarkdownableTypes(types, commentsLookup);
         }
+        
+        private static MarkdownableType[] GetMarkdownableTypes(Type[] types,
+            ILookup<string, XmlDocumentComment> commentsLookup) =>
+            types
+                .Where(x => x.IsPublic && !typeof(Delegate).IsAssignableFrom(x) &&
+                            !x.GetCustomAttributes<ObsoleteAttribute>().Any())
+                .Select(x => new MarkdownableType(x, commentsLookup))
+                .ToArray();
 
         private static bool IsRequiredNamespace(Type type, Regex regex) =>
             regex switch

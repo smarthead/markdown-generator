@@ -8,6 +8,8 @@ namespace Markdown.Generator.Core
     public class MarkdownBuilder
     {
         private readonly List<ElementBase> _elements = new();
+
+        public IEnumerable<ElementBase> Elements => _elements;
         
         public static string MarkdownCodeQuote(string code)
         {
@@ -36,10 +38,10 @@ namespace Markdown.Generator.Core
 
         public void Table(string[] headers, IEnumerable<string[]> items) => _elements.Add(new Table(headers, items));
 
-        public void List(string text) // nest zero
+        public void List(string text)
             => _elements.Add(new List(text));
 
-        public void ListLink(string text, string url) // nest zero
+        public void ListLink(string text, string url)
             => _elements.Add(new List(new Link(text, url)));
 
         public override string ToString()

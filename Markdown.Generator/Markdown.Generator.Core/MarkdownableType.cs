@@ -21,14 +21,14 @@ namespace Markdown.Generator.Core
             _commentLookup = commentLookup;
         }
 
-        private MethodInfo[] GetMethods()
+        public MethodInfo[] GetMethods()
         {
             return _type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.InvokeMethod)
-                .Where(x => !x.IsSpecialName && !x.GetCustomAttributes<ObsoleteAttribute>().Any() && !x.IsPrivate)
+                .Where(x => !x.IsSpecialName && !x.GetCustomAttributes<ObsoleteAttribute>().Any())
                 .ToArray();
         }
 
-        private PropertyInfo[] GetProperties()
+        public PropertyInfo[] GetProperties()
         {
             return _type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.GetProperty | BindingFlags.SetProperty)
                 .Where(x => !x.IsSpecialName && !x.GetCustomAttributes<ObsoleteAttribute>().Any())
@@ -56,14 +56,14 @@ namespace Markdown.Generator.Core
                 .ToArray();
         }
 
-        private FieldInfo[] GetFields()
+        public FieldInfo[] GetFields()
         {
             return _type.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.GetField | BindingFlags.SetField)
                 .Where(x => !x.IsSpecialName && !x.GetCustomAttributes<ObsoleteAttribute>().Any() && !x.IsPrivate)
                 .ToArray();
         }
 
-        private EventInfo[] GetEvents()
+        public EventInfo[] GetEvents()
         {
             return _type.GetEvents(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
                 .Where(x => !x.IsSpecialName && !x.GetCustomAttributes<ObsoleteAttribute>().Any())
@@ -77,7 +77,7 @@ namespace Markdown.Generator.Core
                 .ToArray();
         }
 
-        private PropertyInfo[] GetStaticProperties()
+        public PropertyInfo[] GetStaticProperties()
         {
             return _type.GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.GetProperty | BindingFlags.SetProperty)
                 .Where(x => !x.IsSpecialName && !x.GetCustomAttributes<ObsoleteAttribute>().Any())
@@ -105,14 +105,14 @@ namespace Markdown.Generator.Core
                 .ToArray();
         }
 
-        private MethodInfo[] GetStaticMethods()
+        public MethodInfo[] GetStaticMethods()
         {
             return _type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.InvokeMethod)
                 .Where(x => !x.IsSpecialName && !x.GetCustomAttributes<ObsoleteAttribute>().Any() && !x.IsPrivate)
                 .ToArray();
         }
 
-        private EventInfo[] GetStaticEvents()
+        public EventInfo[] GetStaticEvents()
         {
             return _type.GetEvents(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
                 .Where(x => !x.IsSpecialName && !x.GetCustomAttributes<ObsoleteAttribute>().Any())
