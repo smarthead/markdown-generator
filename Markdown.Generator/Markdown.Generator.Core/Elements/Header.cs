@@ -25,7 +25,7 @@ namespace Markdown.Generator.Core.Elements
 
         public override string Create()
         {
-            for (var i = 0; i < _level; i++)
+            for (var i = 1; i < _level; i++)
             {
                 Builder.Append('#');
             }

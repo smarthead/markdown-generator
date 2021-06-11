@@ -49,7 +49,7 @@ namespace Markdown.Generator.Core
             var builder = new StringBuilder();
 
             _elements.Aggregate(builder, (b, element) => b.Append(element.Create()));
-
+        
             return builder.ToString();
         }
     }

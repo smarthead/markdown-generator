@@ -15,6 +15,11 @@ namespace Markdown.Generator.Core
         public string Name => _type.Name;
         public string BeautifyName => Beautifier.BeautifyType(_type);
 
+        public MarkdownableType(MarkdownBuilder builder)
+        {
+            
+        }
+        
         public MarkdownableType(Type type, ILookup<string, XmlDocumentComment> commentLookup)
         {
             _type = type;
@@ -24,7 +29,7 @@ namespace Markdown.Generator.Core
         public MethodInfo[] GetMethods()
         {
             return _type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.InvokeMethod)
-                .Where(x => !x.IsSpecialName && !x.GetCustomAttributes<ObsoleteAttribute>().Any())
+                .Where(x => !x.IsSpecialName && !x.GetCustomAttributes<ObsoleteAttribute>().Any() && !x.IsPrivate)
                 .ToArray();
         }
 
