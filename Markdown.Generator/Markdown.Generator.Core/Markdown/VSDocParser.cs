@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
-namespace Markdown.Generator.Core
+namespace Markdown.Generator.Core.Markdown
 {
     public enum MemberType
     {

@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace Markdown.Generator.Core.Elements
+namespace Markdown.Generator.Core.Markdown.Elements
 {
     public abstract class ElementBase
     {

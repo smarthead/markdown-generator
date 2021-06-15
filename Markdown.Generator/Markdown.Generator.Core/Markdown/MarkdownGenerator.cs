@@ -5,11 +5,11 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
-namespace Markdown.Generator.Core
+namespace Markdown.Generator.Core.Markdown
 {
-    public static class MarkdownGenerator
+    public class MarkdownGenerator : IMarkdownGenerator
     {
-        public static MarkdownableType[] Load(string dllPath, string namespaceMatch)
+        public MarkdownableType[] Load(string dllPath, string namespaceMatch)
         {
             var xmlPath = Path.Combine(Directory.GetParent(dllPath)?.FullName ?? throw new InvalidOperationException(), Path.GetFileNameWithoutExtension(dllPath) + ".xml");
 
@@ -22,7 +22,7 @@ namespace Markdown.Generator.Core
             return GetMarkdownableTypes(new []{Assembly.LoadFrom(dllPath)}, namespaceMatch, commentsLookup);
         }
         
-        public static MarkdownableType[] Load(Assembly[] assemblies, string namespaceMatch)
+        public MarkdownableType[] Load(Assembly[] assemblies, string namespaceMatch)
         {
             var comments = Array.Empty<XmlDocumentComment>();
             var commentsLookup = comments.ToLookup(x => x.ClassName);
@@ -30,7 +30,7 @@ namespace Markdown.Generator.Core
             return GetMarkdownableTypes(assemblies, namespaceMatch, commentsLookup);
         }
         
-        public static MarkdownableType[] Load(Type[] types)
+        public MarkdownableType[] Load(Type[] types)
         {
             var comments = Array.Empty<XmlDocumentComment>();
             var commentsLookup = comments.ToLookup(x => x.ClassName);
@@ -38,7 +38,7 @@ namespace Markdown.Generator.Core
             return GetMarkdownableTypes(types, commentsLookup);
         }
 
-        private static MarkdownableType[] GetMarkdownableTypes(Assembly[] assemblies, string namespaceMatch,
+        private MarkdownableType[] GetMarkdownableTypes(Assembly[] assemblies, string namespaceMatch,
             ILookup<string, XmlDocumentComment> commentsLookup)
         {
             var namespaceRegex =
@@ -67,7 +67,7 @@ namespace Markdown.Generator.Core
             return GetMarkdownableTypes(types, commentsLookup);
         }
         
-        private static MarkdownableType[] GetMarkdownableTypes(Type[] types,
+        private MarkdownableType[] GetMarkdownableTypes(Type[] types,
             ILookup<string, XmlDocumentComment> commentsLookup) =>
             types
                 .Where(x => x.IsPublic && !typeof(Delegate).IsAssignableFrom(x) &&
@@ -75,7 +75,7 @@ namespace Markdown.Generator.Core
                 .Select(x => new MarkdownableType(x, commentsLookup))
                 .ToArray();
 
-        private static bool IsRequiredNamespace(Type type, Regex regex) =>
+        private bool IsRequiredNamespace(Type type, Regex regex) =>
             regex switch
             {
                 null => true,

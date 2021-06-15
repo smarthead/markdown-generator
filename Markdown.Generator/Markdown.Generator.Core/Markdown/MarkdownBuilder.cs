@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Markdown.Generator.Core.Elements;
+using Markdown.Generator.Core.Markdown.Elements;
 
-namespace Markdown.Generator.Core
+namespace Markdown.Generator.Core.Markdown
 {
     public class MarkdownBuilder
     {

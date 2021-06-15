@@ -1,4 +1,4 @@
-namespace Markdown.Generator.Core.Elements
+namespace Markdown.Generator.Core.Markdown.Elements
 {
     /// <summary>
     /// Represents markdown header

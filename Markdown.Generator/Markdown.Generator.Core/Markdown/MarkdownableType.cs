@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Markdown.Generator.Core
+namespace Markdown.Generator.Core.Markdown
 {
     public class MarkdownableType
     {
@@ -14,11 +14,6 @@ namespace Markdown.Generator.Core
         public string Namespace => _type.Namespace;
         public string Name => _type.Name;
         public string BeautifyName => Beautifier.BeautifyType(_type);
-
-        public MarkdownableType(MarkdownBuilder builder)
-        {
-            
-        }
         
         public MarkdownableType(Type type, ILookup<string, XmlDocumentComment> commentLookup)
         {

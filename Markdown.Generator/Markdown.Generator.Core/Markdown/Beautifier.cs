@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace Markdown.Generator.Core
+namespace Markdown.Generator.Core.Markdown
 {
     public static class Beautifier
     {

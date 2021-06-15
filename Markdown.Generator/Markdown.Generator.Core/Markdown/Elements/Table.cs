@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Markdown.Generator.Core.Elements
+namespace Markdown.Generator.Core.Markdown.Elements
 {
     public class Table: ElementBase
     {
